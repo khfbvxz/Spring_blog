@@ -14,8 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 // 사용자가 요청 -> 응답 ( Data ) 
 @RestController
 public class HttpControllerTest {
+	
+	private static final String TAG = "HttpControllerTest : ";
 	// 인터넷 브라우저 요청은 무조건 get요청밖에 할 수 없다. 
 	// http://localhost:8081/http/get
+	@GetMapping("/http/lombok")
+	public String LombokTest() {
+		// 장점 값을 넣을 때 순서 안지켜도 됨 
+		Member m = Member.builder().password("1234").username("ssar").email("ssar@naver.com").build(); 
+		System.out.println(TAG +"getter " +m.getUsername() );
+		m.setUsername("cos");
+		System.out.println(TAG +"setter " +m.getUsername()  );
+		return "lombok test 완료";
+	}
+	
 	@GetMapping("/http/get")  
 	public String getTest(Member m) { //id=1&username=sar&password=1234&email=ssar@nate.com
 		return "get 요청: "+m.getId() +",  _   " + m.getUsername()+",  _   " +m.getPassword()+",  _   " +m.getEmail();
@@ -24,6 +36,7 @@ public class HttpControllerTest {
 	// http://localhost:8081/http/post
 	@PostMapping("/http/post")   // text/plain  application/json
 	public String postTest(@RequestBody Member m) { // MessageConvertor ( 스프링부트)
+		
 		return "post 요청: "+m.getId() +",  _   " + m.getUsername()+",  _   " +m.getPassword()+",  _   " +m.getEmail();
 	}
 	
