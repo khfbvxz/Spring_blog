@@ -3,6 +3,8 @@ package com.cos.blog.test;
 import java.util.List;
 import java.util.function.Supplier;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +29,35 @@ public class DummyControllerTest {
 	@Autowired // DummyControllerTest 가 메모리에 뜰때 UserRepository 도 같이 띄워준다 
 	private UserRepository userRepository ;
 	
+	// save 함수는 id를 전달하지 않으면 insert를 해주고
+	//save 함수는 id를 전달하면 id에 대한 데이터가 있으면 update를 해주고 ,
+	//save 함수는 id를 전달하면 id에 대한 데이터가 없으면 insert를 해요 
+	//email , password
+	// json 데이터 로 받아서 테스트 
+	@Transactional
+	@PutMapping("/dummy/user/{id}")  // detail 과 같은데 알아서 구분함 
+	public User updateUser(@PathVariable int id,  @RequestBody User requestUser) { 
+		//json데이터를 요청 -> Java Object(MessageConverter의 Jackson 라이브러리가 변환해서 받아줘요. 필요 어노테이션 @RequestBody 
+		System.out.println("id : " +id);
+		System.out.println("password : "+ requestUser.getPassword());
+		System.out.println("email : "+requestUser.getEmail());
+		
+		User user = userRepository.findById(id).orElseThrow( () -> {
+			return new IllegalArgumentException("수정에 실해하였습니다.");
+		});
+		user.setPassword(requestUser.getPassword());
+		user.setEmail(requestUser.getEmail());
+		
+		
+		//userRepository.save(user); 
+		// save insert 할 때 데이터베이스에 있다면 업데이트 처리 그런데 다른 값들이 null 될 수 있다. 
+		
+		// 더티 체킹  @Transactional 
+		
+		return null;
+	}
+	
+	// http://localhost:8000/blog/dummy/user
 	@GetMapping("dummy/users")
 	public List<User> list(){
 		return userRepository.findAll();
@@ -76,7 +109,7 @@ public class DummyControllerTest {
 	//http 의 body 에 username , password, email 데이터를 가지고 (요청)
 	@PostMapping("/dummy/join")
 	// public String join(@RequestParam("username") String username , String password, String email) {
-	public String join(User user) { // key = value (약속된 규칙)
+	public String join(User user) { // key = value (약속된 규칙)  form 태그 
 		System.out.println("id: " + user.getId());  // id auto_increment 적용됨 
 		System.out.println("username: " + user.getUsername());
 		System.out.println("password: " + user.getPassword());
