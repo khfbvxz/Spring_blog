@@ -9,12 +9,14 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="email">Email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
+			<label for="password">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
 		</div>
 		
 		<div class="form-group">
-			<label for="password">Password:</label> <input type="password" class="form-control" placeholder="Enter password" id="passsword">
+			<label for="email">Email address:</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
 		</div>
+		
+		
 		
 	</form>
 	<button id ="btn-save" class="btn btn-primary">회원가입완료 </button>
