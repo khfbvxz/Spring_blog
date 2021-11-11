@@ -23,7 +23,7 @@ public class UserApiController {
 		System.out.println("UserApiController 호출됨");
 		// 실제로 DB에 insert 를 하고 아래에서 return이 되면 되요 
 		user.setRole(RoleType.USER);
-		int result =userService.회원가입(user);
-		return new ResponseDto<Integer>(HttpStatus.OK, result);  //resp 
+		userService.회원가입(user);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);  //resp 
 	}
 }

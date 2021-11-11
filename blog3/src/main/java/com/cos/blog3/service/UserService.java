@@ -16,16 +16,19 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Transactional
-	public int 회원가입(User user) {
-		try {
-			userRepository.save(user);
-			return 1;
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("UserService : 회원가입() : " + e.getMessage());
-		}
-		return -1;
-		//전체가 성공하면 커밋 
-		// 실패하면 롤백  많으면 하나하나 처리 해줘야함 
+	public void 회원가입(User user) {
+		userRepository.save(user);
 	}
+//	public int 회원가입(User user) {
+//		try {
+//			userRepository.save(user);
+//			return 1;
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("UserService : 회원가입() : " + e.getMessage());
+//		}
+//		return -1;
+//		//전체가 성공하면 커밋 
+//		// 실패하면 롤백  많으면 하나하나 처리 해줘야함 
+//	}
 }
