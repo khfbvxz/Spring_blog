@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.cos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //ㅇ
+	//implementation 'org.springframework.boot:spring-boot-starter-security'  // x 
+	implementation 'org.springframework.boot:spring-boot-starter-web'  //ㅇ
+	// 추가 라이브러리 
+	//implementation 'org.springframework.security:spring-security-taglibs' 얘는 나중에 설명
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' 
+	implementation 'javax.servlet:jstl'
+	//compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+	//compile('javax.servlet:jstl')
+	
+	//providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper'
+
+	compileOnly 'org.projectlombok:lombok'  //ㅇ
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'//ㅇ
+	runtimeOnly 'mysql:mysql-connector-java'  //ㅇ
+	annotationProcessor 'org.projectlombok:lombok'//ㅇ 
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'//ㅇ
+	//testImplementation 'org.springframework.security:spring-security-test'
+}
+test {
+	useJUnitPlatform()
+}
