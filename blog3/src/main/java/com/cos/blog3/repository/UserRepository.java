@@ -1,5 +1,7 @@
 package com.cos.blog3.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +16,8 @@ import com.cos.blog3.model.User;
 // 생략가능 
 //@Repository // 예전에는 얘들 등록 해야한다. 그래야 스프링 컴포넌트 스캔을 할 때  유저레포지터리 를 메모리 띄워주는데 
 public interface UserRepository extends JpaRepository<User, Integer>{
-	
+	// select * from user where username = 1?;
+	Optional<User> findByUsername(String username);
 	
 	
 }
