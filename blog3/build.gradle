@@ -21,10 +21,10 @@ repositories {
 dependencies {
 	//compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //ㅇ
-	//implementation 'org.springframework.boot:spring-boot-starter-security'  // x 
+	implementation 'org.springframework.boot:spring-boot-starter-security'  // x 
 	implementation 'org.springframework.boot:spring-boot-starter-web'  //ㅇ
 	// 추가 라이브러리 
-	//implementation 'org.springframework.security:spring-security-taglibs' 얘는 나중에 설명
+	implementation 'org.springframework.security:spring-security-taglibs' //얘는 나중에 설명
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' 
 	implementation 'javax.servlet:jstl'
 	//compile('org.apache.tomcat.embed:tomcat-embed-jasper')
@@ -37,7 +37,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'  //ㅇ
 	annotationProcessor 'org.projectlombok:lombok'//ㅇ 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'//ㅇ
-	//testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 test {
 	useJUnitPlatform()

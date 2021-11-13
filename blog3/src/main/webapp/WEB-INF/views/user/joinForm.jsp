@@ -22,7 +22,7 @@
 	<button id ="btn-save" class="btn btn-primary">회원가입완료 </button>
 	<!-- form 안에있으면 submit 이 된다. 밖으로 뺌  -->
 </div>
-<script src="/blog3/js/user.js"> </script>
+<script src="/js/user.js"> </script>
 <%@ include file="../layout/footer.jsp"%>
 
 
