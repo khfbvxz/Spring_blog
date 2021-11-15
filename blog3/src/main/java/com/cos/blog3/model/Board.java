@@ -37,14 +37,15 @@ public class Board {
 	@Lob // 대용량 데이터 
 	private String content; // 섬머노트 라이브러리
 	
-	@ColumnDefault("0")
 	private int count ; // 조회수
 	
 	@ManyToOne(fetch=FetchType.EAGER)  // Many = Board ,  User = One 
 	@JoinColumn(name="userId") 
 	private User user; // DB는 오브젝트를 저장할 수 없다. FK, 자바는 오브젝트를 저장할 수 있다. 그러나 충돌됨 
 	
-	@OneToMany(mappedBy="board", fetch = FetchType.EAGER)
+	// mappedBy 연관관계의 주인이 아니다 (난 fk가 아니다.)
+	// 나중 select 하기위해 
+	@OneToMany(mappedBy="board", fetch = FetchType.EAGER) // 
 	private List<Reply> reply;
 	
 	@CreationTimestamp
