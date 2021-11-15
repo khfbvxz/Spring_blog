@@ -1,24 +1,32 @@
 package com.cos.blog3.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.data.web.PageableDefault;
 import com.cos.blog3.config.auth.PrincipalDetail;
+import com.cos.blog3.service.BoardService;
 
 @Controller
 public class BoardController {
 	
-	//@Autowired
-	//private PrincipalDetail principal;
+	@Autowired
+	private BoardService boardService;
 	
-	// @ AuthenticationPricipal PrincipalDetail principal
+	
+
 	@GetMapping({"","/"})
-	public String index() { //  컨트롤러에서 세션을 어떻게 찾는지? 
-		// /WEB-INF/views/index..jsp
-		//System.out.println("로그인 가용자 아이디 : " + principal.getUsername());
-		return "index";
+	public String index(Model model, @PageableDefault(size=3, sort="id", direction = Sort.Direction.DESC) Pageable pageable) { //  메인페이지로 갈때 데이터를 들고가야함 모델이 필요 
+		// /WEB-INF/views/index..jsp  
+		// 모델은 jsp 리퀘스트 정보 모델에 담으면 뷰까지 데이터 끌고 이동 
+		model.addAttribute("boards", boardService.글목록(pageable));
+		return "index"; // viewResolver 작동!!
 	}
 		
 	//USER 권한 필요
