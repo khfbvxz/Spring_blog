@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,6 +50,7 @@ public class Board {
 	// 나중 select 하기위해 
 	@OneToMany(mappedBy="board", fetch = FetchType.EAGER) // 
 	@JsonIgnoreProperties({"board"})
+	@OrderBy("id desc")
 	private List<Reply> replys;
 	
 	@CreationTimestamp

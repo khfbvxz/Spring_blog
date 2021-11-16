@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.blog3.config.auth.PrincipalDetail;
 import com.cos.blog3.dto.ResponseDto;
 import com.cos.blog3.model.Board;
+import com.cos.blog3.model.Reply;
 import com.cos.blog3.service.BoardService;
 
 
@@ -44,6 +45,13 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);  
 	}
 	
+	@PostMapping("/api/board/{boardId}/reply")
+	public ResponseDto<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
+		
+//		reply.setUser(principal.getUser());
+		boardService.댓글쓰기(principal.getUser(), boardId, reply);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);  
+	}
 	
 	// 다음시간에 스프링 시큐리티 이용해서 로그인!1
 //	@PostMapping("/api/user/login")
