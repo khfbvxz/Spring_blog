@@ -36,7 +36,7 @@ public class Reply {
 	//누가 어느 게시글의 답변인가? 
 	 
 	@ManyToOne 
-	@JoinColumn(name="boardid")
+	@JoinColumn(name="boardId")
 	private Board board;
 	
 	@ManyToOne
