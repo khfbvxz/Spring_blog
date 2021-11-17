@@ -9,23 +9,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog3.dto.ReplySaveRequestDto;
 import com.cos.blog3.model.Board;
 import com.cos.blog3.model.Reply;
 import com.cos.blog3.model.User;
 import com.cos.blog3.repository.BoardRepository;
 import com.cos.blog3.repository.ReplyRepository;
+import com.cos.blog3.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌  IoC를 해준다.
 @Service
+@RequiredArgsConstructor  // <= 없애면 아래 주석 풀어 
 public class BoardService {
 	
-	@Autowired
-	private BoardRepository boardRepository;
+	 private final BoardRepository boardRepository;
+	 private final ReplyRepository replyRepository;
 	
-	@Autowired
-	private ReplyRepository replyRepository;
-	
+//	 public BoardService(BoardRepository bRepo, ReplyRepository rRepo) {
+//		 this.boardRepository = bRepo;
+//		 this.replyRepository = rRepo;
+//	 }
+	 
 	@Transactional
 	public void 글쓰기(Board board, User user) {  // title , content 
 		board.setCount(0);
@@ -62,14 +69,31 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public void 댓글쓰기(User user, int boardId, Reply requestReply) {
+	public void 댓글쓰기(ReplySaveRequestDto replySaveRequestDto) {
 		
-		Board board = boardRepository.findById(boardId).orElseThrow(()-> {
-			return new IllegalArgumentException("댓글쓰기실패 : 게시글 id를 찾을 수 없습니다. ");
-		});
-		requestReply.setUser(user);
-		requestReply.setBoard(board);
-		replyRepository.save(requestReply);
+//		User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()-> {
+//			return new IllegalArgumentException("댓글쓰기실패 : 유저 id를 찾을 수 없습니다. ");
+//		});
+//		
+//		Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()-> {
+//			return new IllegalArgumentException("댓글쓰기실패 : 게시글 id를 찾을 수 없습니다. ");
+//		});
+//		Reply reply = Reply.builder()
+//				.user(user)
+//				.board(board)
+//				.content(replySaveRequestDto.getContent())
+//				.build();
+//		
+//		Reply reply = new Reply();
+//		reply.update(user, board, replySaveRequestDto.getContent());
+		
+	
+		replyRepository.mSave(replySaveRequestDto.getUserId(),replySaveRequestDto.getBoardId(),replySaveRequestDto.getContent());
+	}
+	
+	@Transactional
+	public void 댓글삭제(int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 	
 }
