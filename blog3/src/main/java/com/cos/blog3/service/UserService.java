@@ -26,7 +26,6 @@ public class UserService {
 	
 	@Transactional(readOnly = true)
 	public User 회원찾기(String username) { // 옵션널
-		
 		User user = userRepository.findByUsername(username).orElseGet(()->{
 			return new User();
 		}); 
@@ -34,12 +33,18 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void 회원가입(User user) {
+	public int 회원가입(User user) {
 		String rawPassword = user.getPassword(); // 1234 원문
 		String encPassword = encoder.encode(rawPassword); // 해쉬
 		user.setPassword(encPassword);
 		user.setRole(RoleType.USER);	
-		userRepository.save(user);
+		user.setRole(RoleType.USER);
+		try {
+			userRepository.save(user);
+			return 1;
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 	@Transactional
 	public void 회원수정(User user) {
