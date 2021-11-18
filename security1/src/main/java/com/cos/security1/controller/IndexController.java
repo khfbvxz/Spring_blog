@@ -2,7 +2,10 @@ package com.cos.security1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cos.security1.model.User;
 
 @Controller // View 를 리턴 하겠다
 public class IndexController {
@@ -28,18 +31,21 @@ public class IndexController {
 	public @ResponseBody String manager() {
 		return "manager";
 	}
-	// 스프링 시큐리티가 해당주소 낚아챔 - SecurityConfig 파일 생성후 작동 안함 
-	@GetMapping("/login")
-	public @ResponseBody String login() {
-		return "login";
+	// 스프링 시큐리티가 해당주소 낚아챔 
+	@GetMapping("/loginForm")
+	public String loginForm() {
+		return "loginForm";
 	}
-	@GetMapping("/join")
-	public @ResponseBody String join() {
+	@GetMapping("/joinForm")
+	public String joinForm() {
+		return "joinForm";
+	}
+	
+	@PostMapping("/join")
+	public @ResponseBody String join(User user) {
+		System.out.println(user);
 		return "join";
 	}
-	@GetMapping("/joinProc")
-	public @ResponseBody String joinProc() {
-		return "회원가입 완료됨!";
-	}
+
 	
 }
