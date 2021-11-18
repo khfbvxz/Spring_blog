@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 
 <html>
 <head>
@@ -8,9 +10,9 @@
 </head>
 <body>
 <h1>
-	Hello world!   길동길동 
+	Hello world~~~  고길동!!! 홍길동!!!  
 </h1>
 
-<P>  현재날짜 및 시간   ${serverTime}. </P>
+<h2>  현재날짜및 시간 : ${serverTime}  </h2>
 </body>
 </html>

@@ -22,6 +22,8 @@ public class User {
 	private String password;
 	private String email;
 	private String role; // ROLE_USER, ROLE_ADMIN
+	// 만약 휴먼계정 한다면 
+	//private Timestamp loginDate;
 	@CreationTimestamp
 	private Timestamp createDate;
 	

@@ -1,6 +1,6 @@
 package net.hb.crud;
 
-import org.springframework.web.multipart.MultipartFile; //»õ·ÎÃß°¡
+//import org.springframework.web.multipart.MultipartFile; //ìƒˆë¡œì¶”ê°€
 
 public class BoardDTO {
   private int sabun;
@@ -14,10 +14,10 @@ public class BoardDTO {
   private int hit;
   private String email;
   
-	private  int hobby_idx; //Ãß°¡
-	private  String hobby; //Ãß°¡
-	private  String img_file_name ; //Ãß°¡
-	private  MultipartFile upload_f ;  //Ãß°¡ <input type=file name=uplaod_f
+  private  int hobby_idx; //ì¶”ê°€
+  private  String hobby; //ì¶”ê°€
+  private  String img_file_name ; //ì¶”ê°€
+  //private  MultipartFile upload_f ;  //ì¶”ê°€ <input type=file name=uplaod_f
 	
 	 public int getHobby_idx() { return hobby_idx;	}
 	 public void setHobby_idx(int hobby_idx) {this.hobby_idx = hobby_idx;}
@@ -25,10 +25,9 @@ public class BoardDTO {
 	 public void setHobby(String hobby) {this.hobby = hobby;}
 	 public String getImg_file_name() {return img_file_name;}
 	 public void setImg_file_name(String img_file_name) {this.img_file_name = img_file_name;	}
-	 public MultipartFile getUpload_f() {return upload_f;}
-	 public void setUpload_f(MultipartFile upload_f) {this.upload_f = upload_f;	}
+	 //public MultipartFile getUpload_f() {return upload_f;}
+	 //public void setUpload_f(MultipartFile upload_f) {this.upload_f = upload_f;	}
 	
-  
 	public int getSabun() {return sabun;}
 	public void setSabun(int sabun) {this.sabun = sabun;}
 	public java.util.Date getWdate() {return wdate;	}
@@ -38,18 +37,18 @@ public class BoardDTO {
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
 
-	public int getPay() {return pay;}
+   public int getPay() {return pay;}
    public void setPay(int pay) {this.pay = pay;}
    public int getRn() {return rn;}
    public void setRn(int rn) {this.rn = rn;}
 	
-  public String getName() {return name;}
-  public void setName(String name) {this.name = name;	}
-  public String getTitle() {return title;}
-  public void setTitle(String title) {this.title = title;}
-  public String getContent() {return content;	}
-  public void setContent(String content) {this.content = content;}
-  public String getGender() {	return gender;	}
-  public void setGender(String gender) {	this.gender = gender;}
+   public String getName() {return name;}
+   public void setName(String name) {this.name = name;	}
+   public String getTitle() {return title;}
+   public void setTitle(String title) {this.title = title;}
+   public String getContent() {return content;	}
+   public void setContent(String content) {this.content = content;}
+   public String getGender() {	return gender;	}
+   public void setGender(String gender) {	this.gender = gender;}
 
 }//class END
