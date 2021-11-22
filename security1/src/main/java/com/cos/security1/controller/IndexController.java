@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cos.security1.config.auth.PrincipalDetails;
 import com.cos.security1.model.User;
 import com.cos.security1.repository.UserRepository;
 
@@ -22,6 +27,26 @@ public class IndexController {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@GetMapping("/test/login")                                                                    //  @AuthenticationPrincipal UserDetails userDetails userDetails 타입 이므로 
+	public @ResponseBody String testLogin(Authentication authentication, @AuthenticationPrincipal PrincipalDetails userDetails) { //DI(의존성 주입) 
+		System.out.println("/test/login =====================");
+		PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal(); // 다운 캐스팅 원래는 UserDetails로 다운캐스팅을 해야함  
+		System.out.println("authentication : "+ principalDetails.getUser()); // 리턴타입 오브젝트  // get 호출 안되는 것 principal 가서 @Data
+		
+		System.out.println("userDetails : "+ userDetails.getUser() );//userDetails 타입 
+		return "세션정보확인하기";
+	}
+	
+	@GetMapping("/test/oauth/login")                                                                  
+	public @ResponseBody String testOauthLogin(Authentication authentication,
+			@AuthenticationPrincipal OAuth2User oauth) { //DI(의존성 주입) 
+		System.out.println("/test/login =====================");
+		OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal(); // 다운 캐스팅 
+		System.out.println("authentication : "+ oauth2User.getAttributes()); //  loadUser 에서 받은 정보와 같다 
+		System.out.println("oauth2User : " + oauth.getAttributes());
+	
+		return "OAuth 세션정보확인하기";
+	}
 	//localhost : 8082/
 	//localhost : 8082
 	@GetMapping({"","/"})
@@ -32,8 +57,11 @@ public class IndexController {
 		return "index"; // src/main/resources/templates/index.mustache
 	}
 	
+	//OAuth 로그인 해도 PrincipalDetails
+	// 일반 로그인을 해도PrincipalDetails 받을 수 있음  어노테이션 활용하면 다운캐스팅 안해도 됨 어디서 활성화 되냐 
 	@GetMapping("/user")
-	public @ResponseBody String user() {
+	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println("PrincipalDetails : " + principalDetails.getUser());
 		return "user";
 	}
 	@GetMapping("/admin")
