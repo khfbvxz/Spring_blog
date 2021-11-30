@@ -1,11 +1,19 @@
 package com.cos.book.web;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.book.domain.Book;
+import com.cos.book.domain.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +47,21 @@ import lombok.extern.slf4j.Slf4j;
 public class BookControllerIntegreTest {
 
 	@Autowired
+	private BookRepository bookRepository;
+	
+	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private EntityManager entityManager;
+	
+	// 모든 테스트함수가 실행되기전 각각 실행됨 
+	@BeforeEach 
+	public void init() {
+//		entityManager.persist(new Book());  //persist 영속
+		entityManager.createNativeQuery("ALTER TABLE book ALTER COLUMN id RESTART WITH 1").executeUpdate();
+	}
+	
 	
 	@Test
 	public void save_테스트() throws Exception {
@@ -50,7 +73,7 @@ public class BookControllerIntegreTest {
 		String content = new ObjectMapper().writeValueAsString(book);
 //		log.info(content);
 		// 행동 지정 
-		when(bookService.저장하기(book)).thenReturn(new Book(1L, "스프링 따라하기","코스"));
+		//when(bookService.저장하기(book)).thenReturn(new Book(1L, "스프링 따라하기","코스"));
 		
 		//when (테스트 실행)
 		ResultActions resultAction = mockMvc.perform(post("/book")
@@ -64,4 +87,30 @@ public class BookControllerIntegreTest {
 			.andExpect(jsonPath("$.title").value("스프링 따라하기"))
 			.andDo(MockMvcResultHandlers.print());
 	}
+	
+	@Test
+	public void findAll_테스트() throws Exception{
+		//given
+		List<Book> books = new ArrayList<>();
+		books.add(new Book(null, "스프링부트따라하기","코스"));
+		books.add(new Book(null, "리액트 따라하기","코스"));
+		books.add(new Book(null, "JUNIT 따라하기","코스"));
+		bookRepository.saveAll(books);
+//		when
+		
+		ResultActions resultAction = mockMvc.perform(get("/book")
+				.accept(MediaType.APPLICATION_JSON_UTF8));
+		
+		//then 
+		resultAction
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", Matchers.hasSize(3)))
+			.andExpect(jsonPath("$.[2].title").value("JUNIT 따라하기" ))
+			.andDo(MockMvcResultHandlers.print());
+		
+	}
+//	
+//	@Test
+//	public void save_
+//	
 }

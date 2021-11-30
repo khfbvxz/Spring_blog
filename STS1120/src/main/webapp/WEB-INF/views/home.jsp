@@ -13,6 +13,12 @@
 	Hello world~~~  고길동!!! 홍길동!!!  
 </h1>
 
-<h2>  현재날짜및 시간 : ${serverTime}  </h2>
+<h2>  
+   현재날짜및 시간 : ${serverTime} <br>
+   <a href="boardWrite.sp">[board글쓰기]</a>
+   <a href="boardList.sp">[board전체출력]</a>
+   <a href="index.jsp">[index]</a> 
+ </h2>
+
 </body>
 </html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">	
+
+	<insert id="add" parameterType="net.hb.crud.BoardDTO">
+	   insert into hobby(hobby_idx,name,title,content,gender,hobby,img_file_name)
+	   values(hobby_seq.nextVal, #{name}, #{title}, #{content}, #{gender}, #{hobby}, #{img_file_name} )    
+	</insert>
+	
+	<insert id="add2" parameterType="net.hb.crud.BoardDTO">
+	   insert into hobby
+	   values(hobby_seq.nextVal, #{name}, #{title}, #{content}, #{gender}, #{hobby}, #{img_file_name} )    
+	</insert>
+	
+	
+	<select id="selectAll"  parameterType="net.hb.crud.BoardDTO" resultType="net.hb.crud.BoardDTO">
+	    select  * from  (
+	      select  rownum rn, h.*, (select count(*) from hobby_reply r where r.hobby_idx=h.hobby_idx) as rcnt from 
+	        (select * from hobby  where ${skey}  like '%' ||  #{sval} ||  '%'  ) h 
+	   ) where rn  between   #{startRow}  and  #{endRow}
+	</select>
+	
+	
+	<select id="countAllSearch"   parameterType="net.hb.crud.BoardDTO"  resultType="int">
+	   select count(*)  from hobby where ${skey}  like '%' ||  #{sval}  || '%' 
+	</select>
+	
+	
+	<select id="selectAll1127"   resultType="net.hb.crud.BoardDTO">
+	  select rownum rn, h.* from  hobby h
+	  where rn between  1  and  10
+	</select>
+	
+	
+	<select id="selectAll1126"  parameterType="net.hb.crud.BoardDTO" resultType="net.hb.crud.BoardDTO">
+	  select * from (
+	   	select rownum rn, h.* from  hobby h
+	  ) where rn between  #{startRow}  and  #{endRow}
+	</select>
+	
+	
+	<select id="selectAll1125" resultType="net.hb.crud.BoardDTO">
+	   	select rownum rn, h.* from  hobby h
+	</select>
+	
+	
+	<select id="countAll" resultType="int">
+	   select count(*)  from hobby
+	</select>
+	
+	
+	<select id="detail" parameterType="int" resultType="net.hb.crud.BoardDTO">
+	   select * from  hobby  where hobby_idx = #{data}   
+	</select>
+	
+	
+	<delete id="del" parameterType="int">
+	  delete from  hobby  where hobby_idx =  #{data}  
+	</delete>
+	
+	
+	<update id="update" parameterType="net.hb.crud.BoardDTO">
+	  update  hobby set name=#{name},  title=#{title}, content=#{content}, 
+	  gender=#{gender}, hobby=#{hobby}, img_file_name=#{img_file_name}  where hobby_idx = #{hobby_idx}  
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+

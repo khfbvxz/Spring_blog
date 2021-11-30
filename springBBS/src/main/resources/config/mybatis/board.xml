@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">	
+
+	<insert id="add">
+	    insert into sboard values(sboard_seq.nextval, #{id}, #{title}, #{content}, 0, sysdate, #{b_file} )
+	</insert>
+	
+	<select id="selectAllTAM" parameterType="com.myspring.springBBS.Pager.Pager" resultType="com.myspring.springBBS.BoardDTO">
+		select * from (
+			select rownum rn, s.* from
+			  (select * from sboard  where ${skey} like '%' || #{sval} || '%' ) s 
+		)
+		where rn between #{start} and #{end}
+	</select>
+	
+	 
+	<select id="selectAll" parameterType="com.myspring.springBBS.Pager.Pager" resultType="com.myspring.springBBS.BoardDTO">
+		select * from (
+			select rownum rn, s.* from (
+				select * from sboard 
+				<if test="skey != null">
+					<if test="skey == 'name'">
+						where id like '%' || #{sval} || '%' 
+					</if>
+					<if test="skey == 'title'">
+						where title like '%' || #{sval} || '%' 
+					</if>
+					<if test="skey == 'content'">
+						where content like '%' || #{sval} || '%' 
+					</if>
+				</if>
+				order by b_date
+			) s 
+			order by rn desc
+		)
+		where rn between #{start} and #{end}
+	</select>
+	
+	<select id="countSearch" parameterType="com.myspring.springBBS.Pager.Pager" resultType="int">
+		select count(*) from sboard  		
+		<if test="skey != null">
+			<if test="skey == 'name'">
+				where id like '%' || #{sval} || '%'
+			</if>
+			<if test="skey == 'title'">
+				where title like '%' || #{sval} || '%'
+			</if>
+			<if test="skey == 'content'">
+				where content like '%' || #{sval} || '%'
+			</if>
+		</if>		  
+	</select>
+	
+	<select id="count" resultType="int">
+	     select count(*)  from sboard 
+	</select>
+	
+	<select id="detail" parameterType="int" resultType="com.myspring.springBBS.BoardDTO">
+		select * from sboard where no=#{idx}
+	</select>
+	
+	<update id="cnt" parameterType="int">
+		update sboard set count=count+1 where no=#{idx}
+	</update>
+	
+	<update id="edit" parameterType="com.myspring.springBBS.BoardDTO">
+	    update sboard set title=#{title},content=#{content},b_file=#{b_file} 
+	    where no=#{no}
+	</update>
+		
+	<delete id="del" parameterType="int">
+	    delete from sboard where no=#{idx} 
+	</delete>
+	
+	<select id="selectAlbum" resultType="com.myspring.springBBS.BoardDTO">
+		select * from sboard where b_file is not null order by b_date
+	</select>	
+</mapper>

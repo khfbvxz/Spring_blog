@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-
+	
 	@RequestMapping(value = "/kakao.sp", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -24,10 +24,10 @@ public class HomeController {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
-		
+			
 		model.addAttribute("serverTime", formattedDate );
-		// request.addAttribute("serverTime", formattedDate );
-		return "home";
+		//request.setAttribute("serverTime", formattedDate );
+		return "home";  //WEB-INF/views폴더/home.jsp문서 가르켜요 
 	}
 	
-}
+}//HomeController class END

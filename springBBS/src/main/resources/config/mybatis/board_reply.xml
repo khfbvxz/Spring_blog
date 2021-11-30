@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board_reply">
+	
+	<insert id="add" parameterType="com.myspring.springBBS.Reply.ReplyDTO">
+		    insert into sreply values(sreply_seq.nextval, #{r_id}, #{r_content}, sysdate, #{r_bno})
+	</insert>
+	
+	<select id="select" parameterType="int" resultType="com.myspring.springBBS.Reply.ReplyDTO">
+		select * from sreply where r_bno=#{idx} order by r_date
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from sreply where r_no=#{r_no}
+	</delete>
+	
+	<update id="edit" parameterType="com.myspring.springBBS.Reply.ReplyDTO">
+		update sreply set r_content=#{r_content} 
+		where r_no=#{r_no}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

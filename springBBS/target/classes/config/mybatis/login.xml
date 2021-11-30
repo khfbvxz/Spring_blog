@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="login">	
+
+	<select id="check" resultType="int" parameterType="com.myspring.springBBS.Account.AccountDTO">
+		select count(*) from sacct where s_id=#{s_id} and s_pw=#{s_pw}
+	</select>
+
+	<select id="selectone"  resultType="com.myspring.springBBS.Login.LoginDTO" parameterType="com.myspring.springBBS.Account.AccountDTO">
+		select s_id,s_name,s_gender,s_phone,s_email from sacct where s_id=#{s_id} and s_pw=#{s_pw}
+	</select>
+	
+	<insert id="insert" parameterType="com.myspring.springBBS.Login.LoginDTO">
+		insert into slogin values(#{s_id},#{s_name},#{s_gender},#{s_phone},#{s_email})
+	</insert>
+	
+	<delete id="logout">
+		delete from slogin where s_id=#{id}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="acct">	
+
+	<select id="idCheck" resultType="int">
+	     select count(*) from sacct where s_id=#{id}
+	</select>
+	
+	<insert id="insert" parameterType="com.myspring.springBBS.Account.AccountDTO">
+		insert into sacct values(#{s_id},#{s_pw},#{s_name},#{s_gender},#{s_phone},#{s_email}, sysdate)
+	</insert>
+			
+</mapper>

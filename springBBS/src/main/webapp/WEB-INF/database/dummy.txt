@@ -1,0 +1,23 @@
+
+insert into sboard values(sboard_seq.nextval, 'aa', 'snow', '겨울날', 0 , sysdate, 'a2.png');
+insert into sboard values(sboard_seq.nextval, 'bb', 'summer', '여름날', 0 , sysdate, 'bbb.gif');
+insert into sboard values(sboard_seq.nextval, 'cc', 'winter', '입동날', 0 , sysdate, 'bear.gif');
+insert into sboard values(sboard_seq.nextval, 'dd', 'wind', '하지날', 0 , sysdate, 'a3.png');
+insert into sboard values(sboard_seq.nextval, 'ee', 'rain', '비오는날', 0 , sysdate, 'a4.png');
+insert into sboard values(sboard_seq.nextval, 'ff', 'snow', '눈이펑펑와요', 0 , sysdate, 'a1.png');
+insert into sboard values(sboard_seq.nextval, 'gg', 'summer', '파란바다', 0 , sysdate, 'bbb.gif');
+
+
+select * from sboard;
+commit;
+
+
+select * from (
+   select rownum rn, s.* from (select * from sboard order by b_date) s 
+)where rn between 1 and 5 ;
+
+commit;
+
+
+
+

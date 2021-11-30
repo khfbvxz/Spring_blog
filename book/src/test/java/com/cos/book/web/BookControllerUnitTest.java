@@ -5,16 +5,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+//import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
+//import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+//import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.cos.book.domain.Book;
@@ -23,6 +27,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
+// hamcrest
+import org.hamcrest.Matchers; //
 
 //단위 테스트(Controller, Filter, ControllerAdvice) 관련 로직만 띄우기 
 // 
@@ -62,5 +68,25 @@ public class BookControllerUnitTest {
 			.andExpect(status().isCreated())
 			.andExpect(jsonPath("$.title").value("스프링 따라하기"))
 			.andDo(MockMvcResultHandlers.print());
+	}
+	@Test
+	public void findAll_테스트() throws Exception{
+		//given
+		List<Book> books = new ArrayList<>();
+		books.add(new Book(1L, "스프링부트따라하기","코스"));
+		books.add(new Book(2L, "리액트 따라하기","코스"));
+		
+		when(bookService.모두가져오기()).thenReturn(books);
+		
+		ResultActions resultAction = mockMvc.perform(get("/book")
+				.accept(MediaType.APPLICATION_JSON_UTF8));
+		
+		//then 
+		resultAction
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", Matchers.hasSize(2)))
+			.andExpect(jsonPath("$.[0].title").value("스프링부트 따라하기" ))
+			.andDo(MockMvcResultHandlers.print());
+		
 	}
 }

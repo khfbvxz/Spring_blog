@@ -1,0 +1,122 @@
+
+drop sequence sacct_seq;
+create sequence sacct_seq;
+commit;
+
+drop table sacct;
+create table sacct(
+	s_id varchar2(50) not null,
+	s_pw varchar2(50) not null,
+	s_name varchar2(50) not null,
+	s_gender varchar2(10) not null,
+	s_phone varchar2(20) not null,
+	s_email varchar2(50) not null,
+	s_date date not null,
+	primary key(s_id)
+);
+commit;
+
+drop table slogin;
+create table slogin(
+	s_id varchar2(10) not null,
+	s_name varchar2(20) not null,
+	s_gender varchar2(10) not null,
+	s_phone varchar2(20) not null,
+	s_email varchar2(30) not null,
+	primary key(s_id)
+);
+commit;
+
+drop sequence  sboard_seq;
+create sequence sboard_seq;
+commit;
+
+drop table sboard;
+create table sboard(
+	no number(7) not null,
+	id varchar2(20) not null,
+	title varchar2(30) not null,
+	content varchar2(50) not null,
+	count number(7) not null,
+	b_date date not null,
+	b_file varchar2(50),	
+	primary key(no)
+);
+commit;
+
+drop sequence sreply_seq;
+create sequence sreply_seq;
+commit;
+
+drop table sreply;
+create table sreply(
+	r_no number(7) not null,
+	r_id varchar2(20) not null,
+	r_content varchar2(50) not null,
+	r_date date not null,
+	r_bno number(7) not null,
+	primary key(r_no)
+);
+commit;
+
+
+set linesize 2000
+col no for 999
+col id for a10
+col title for a20
+col content for a20
+col count for 999
+col b_date for a10
+col b_file for a10
+
+col s_id for a10
+col s_pw for a10
+col s_name for a10
+col s_gender for a10
+col s_phone for a15
+col s_email for a20
+col s_date for a10
+
+col r_no for 999
+col r_id for a10
+col r_content for a30
+col r_date for a10
+col r_bno for 999
+
+
+
+
+insert into sboard values(sboard_seq.nextval, 'aa', 'snow', '겨울날', 0 , sysdate, 'a1.png');
+insert into sboard values(sboard_seq.nextval, 'bb', 'summer', '여름날', 0 , sysdate, 'bbb.gif');
+insert into sboard values(sboard_seq.nextval, 'cc', 'winter', '입동날', 0 , sysdate, 'bear.gif');
+insert into sboard values(sboard_seq.nextval, 'dd', 'wind', '하지날', 0 , sysdate, 'a2.png');
+insert into sboard values(sboard_seq.nextval, 'ee', 'rain', '비오는날', 0 , sysdate, 'a3.png');
+insert into sboard values(sboard_seq.nextval, 'ff', 'snow', '눈이펑펑와요', 0 , sysdate, 'a4.png');
+insert into sboard values(sboard_seq.nextval, 'gg', 'summer', '파란바다', 0 , sysdate, 'cherry.png');
+
+
+select * from sboard;
+commit;
+
+
+select * from (
+   select rownum rn, s.* from (select * from sboard order by b_date) s 
+)where rn between 1 and 5 ;
+
+commit;
+
+
+
+
+
+
+
+
+
+--참고문서board.xml문서에서 페이징기술 
+select * from
+(select rownum rn, s.* from (select * from sboard order by b_date) s order by rn desc)
+where rn between #{start} and #{end}
+
+
+
