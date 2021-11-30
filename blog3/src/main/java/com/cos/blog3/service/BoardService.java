@@ -1,8 +1,8 @@
 package com.cos.blog3.service;
 
-import java.util.List;
+// import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog3.dto.ReplySaveRequestDto;
 import com.cos.blog3.model.Board;
-import com.cos.blog3.model.Reply;
+// import com.cos.blog3.model.Reply;
 import com.cos.blog3.model.User;
 import com.cos.blog3.repository.BoardRepository;
 import com.cos.blog3.repository.ReplyRepository;
-import com.cos.blog3.repository.UserRepository;
+// import com.cos.blog3.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,14 +25,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor  // <= 없애면 아래 주석 풀어 
 public class BoardService {
 	
-	 private final BoardRepository boardRepository;
-	 private final ReplyRepository replyRepository;
+	private final BoardRepository boardRepository;
+	private final ReplyRepository replyRepository;
 	
 //	 public BoardService(BoardRepository bRepo, ReplyRepository rRepo) {
 //		 this.boardRepository = bRepo;
 //		 this.replyRepository = rRepo;
 //	 }
-	 
 	@Transactional
 	public void 글쓰기(Board board, User user) {  // title , content 
 		board.setCount(0);

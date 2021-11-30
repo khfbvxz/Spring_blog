@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.cos.blog3.dto.ReplySaveRequestDto;
+// import com.cos.blog3.dto.ReplySaveRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.cos.blog3.dto;
 
-import org.springframework.http.HttpStatus;
+// import org.springframework.http.HttpStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

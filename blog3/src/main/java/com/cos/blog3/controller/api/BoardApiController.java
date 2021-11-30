@@ -1,11 +1,11 @@
 package com.cos.blog3.controller.api;
 
-import javax.servlet.http.HttpSession;
+// import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ import com.cos.blog3.config.auth.PrincipalDetail;
 import com.cos.blog3.dto.ReplySaveRequestDto;
 import com.cos.blog3.dto.ResponseDto;
 import com.cos.blog3.model.Board;
-import com.cos.blog3.model.Reply;
+// import com.cos.blog3.model.Reply;
 import com.cos.blog3.service.BoardService;
 
 
