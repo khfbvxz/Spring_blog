@@ -41,7 +41,7 @@ public class BookController {
 	}
 	
 	@DeleteMapping("/book/{id}")
-	public ResponseEntity<?> deleteById(@PathVariable Long id, @RequestBody Book book){ // 물음표 어떤 것을 리턴할지 모를때 
+	public ResponseEntity<?> deleteById(@PathVariable Long id){ // 물음표 어떤 것을 리턴할지 모를때 
 		return new ResponseEntity<>(bookService.삭제하기(id),HttpStatus.OK);
 	}
 }
